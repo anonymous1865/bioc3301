@@ -1,0 +1,26 @@
+#!/bin/bash -login
+#PBS -l walltime=00:30:00
+#PBS -l select=1:ncpus=16
+#PBS -N summarise_combi-core_microbiome_report
+#PBS -A d411-training
+
+#Load python modules
+module load miniconda/python2
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# activate the virtual environment
+echo "activating virtual environment"
+source activate qiime1
+
+# summarise core microbiome 16/17/18, L2
+echo "summaring core microbiome 16/17/18, L2"
+time summarize_taxa.py -i ~/bioc3301/combi_analysis/gordon_merged_combi_core_otu_table/core_table_50.biom -L 2 -o ~/bioc3301/combi_analysis/
+
+# summarise core microbiome 16/17/18, L3
+echo "summaring core microbiome 16/17/18, L3"
+time summarize_taxa.py -i ~/bioc3301/combi_analysis/gordon_merged_combi_core_otu_table/core_table_50.biom -L 3 -o ~/bioc3301/combi_analysis/
+
+#deactivating virtual environment
+source deactivate
