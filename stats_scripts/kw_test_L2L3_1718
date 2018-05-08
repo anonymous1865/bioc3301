@@ -1,0 +1,26 @@
+#!/bin/bash -login
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=16
+#PBS -N 1718_kw_test
+#PBS -A d411-training
+
+#Load python modules
+module load miniconda/python2
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# activate the virtual environment
+echo "activating virtual environment"
+source activate qiime1
+
+#Kruskal Wallis Tests
+echo "KW Test. 17/18 core OTUs at L2. Year"
+time group_significance.py -i ~/bioc3301/1718_analysis/core_table_50_L2.biom -m ~/bioc3301/combi_analysis/yrs_merged_map.tsv -c Year -s kruskal_wallis -o ~/bioc3301/1718_analysis/1718_stats_tests/17_18kw_year_L2.txt
+
+#Kruskal Wallis Tests
+echo "KW Test. 17/18 core OTUs at L3. Year"
+time group_significance.py -i ~/bioc3301/1718_analysis/core_table_50_L3.biom -m ~/bioc3301/combi_analysis/yrs_merged_map.tsv -c Year -s kruskal_wallis -o ~/bioc3301/1718_analysis/1718_stats_tests/17_18kw_year_L3.txt
+
+ #deactivating virtual environment
+source deactivate
