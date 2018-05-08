@@ -1,0 +1,25 @@
+#!/bin/bash -login
+#PBS -l walltime=00:15:00
+#PBS -l select=1:ncpus=16
+#PBS -N make_2D_plot_report
+#PBS -A d411-training
+
+#Load python modules
+module load miniconda/python2
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# activate the virtual environment
+echo "activating virtual environment"
+source activate qiime1
+
+# make 2D plot weighted 
+echo "making 2D plot"
+time make_2d_plots.py -i ~/bioc3301/1718_analysis/1718_GORDON_CORE_MICROBIOME_CDA/bdiv_even26717/weighted_unifrac_pc.txt -b Year -m ~/bioc3301/combi_analysis/yrs_merged_map.tsv -o ~/bioc3301/1718_analysis/1718_GORDON_CORE_MICROBIOME_CDA
+
+# make 2D plot unweighted
+time make_2d_plots.py -i ~/bioc3301/1718_analysis/1718_GORDON_CORE_MICROBIOME_CDA/bdiv_even26717/unweighted_unifrac_pc.txt -b Year -m ~/bioc3301/combi_analysis/yrs_merged_map.tsv -o ~/bioc3301/1718_analysis/1718_GORDON_CORE_MICROBIOME_CDA
+
+# deactivate virtual environment
+source deactivate
