@@ -1,0 +1,23 @@
+#!/bin/bash -login
+#PBS -l walltime=00:10:00
+#PBS -l select=1:ncpus=2
+#PBS -N remove_16_otus_from_master_report
+#PBS -A d411-training
+
+#Load python modules
+module load miniconda/python2
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# activate the virtual environment
+echo "activating virtual environment"
+source activate qiime1
+
+# remove 16 otus from master
+echo "removing 16 otus from master"
+
+time filter_samples_from_otu_table.py -i ~/bioc3301/combi_analysis/gordon_merged_otu_table.biom -o ~/bioc3301/1718_analysis/1718_gordon_merged_otu_table.biom --sample_id_fp ~/bioc3301/editing_scripts/remove_16_otus_from_master.txt --negate_sample_id_fp
+
+#deactivating virtual environment
+source deactivate
