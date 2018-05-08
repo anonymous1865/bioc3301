@@ -1,0 +1,22 @@
+#!/bin/bash --login
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=2
+#PBS -N demultiplex_report
+#PBS -A d411-training
+
+module load miniconda/python2
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# loading virtualenv
+echo "loading virtualenv"
+source activate qiime1
+
+# split libraries / demultiplex
+echo "splitting libraries"
+
+time split_libraries_fastq.py -m ~/bioc3301/2018_02_smb/map.tsv -i ~/bioc3301/2018_02_smb/joined_ends/seqprep_assembled.fastq.gz -b ~/bioc3301/2018_02_smb/joined_ends/seqprep_assembled.fastq_barcodes.fastq -q 19 -o ~/bioc3301/2018_02_smb/demultiplexed_q20 --rev_comp_barcode --rev_comp_mapping_barcodes
+
+# source deactivate
+source deactivate
