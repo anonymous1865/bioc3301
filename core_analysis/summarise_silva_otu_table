@@ -1,0 +1,22 @@
+#!/bin/bash -login
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=16
+#PBS -N silva_table_summary_report
+#PBS -A d411-training
+
+#Load python modules
+module load miniconda/python2
+
+# setting temporary directory
+export TMPDIR=~/qiime_tmp
+
+# activate the virtual environment
+echo "activating virtual environment"
+source activate qiime1
+
+# summarse the  OTU table
+echo "summarising BIOM table"
+biom summarize-table -i ~/bioc3301/2018_02_smb/silva_otus/otu_table.biom -o ~/bioc3301/2018_02_smb/silva_otus/table_summary.txt
+
+# deactivate virtual environment
+source deactivate
