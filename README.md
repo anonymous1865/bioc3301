@@ -12,11 +12,15 @@ There are five directories, all containing multiple scripts that were submitted 
 4) editing_scripts
 5) statistical_scripts
 
-You will note core_analysis (3X) refers to the core pipeline analysis performed individually on years 2016, 2017 and 2018. This was carried out using QIIME scripts and involves taking the raw data from Illumina alongside a metadata mapping file, pairing both reads, demultiplexing the Illumina data (using GoLay barcodes) and picking OTUs against a Silva 16S rRNA referencing database.
+You will note core_analysis (5X) refers to the core pipeline analysis performed individually on years 2016, 2017 and 2018. This was carried out using QIIME scripts and involves taking the raw data from Illumina alongside a metadata mapping file, pairing both reads, demultiplexing the Illumina data (using GoLay barcodes) and picking OTUs against a Silva 16S rRNA referencing database.
 - join_paired_ends: This script was used to join the read 1 and read 2 produced by the Illumina MiSeq sequencing platform. 
 - demultiplex_otus: This script then utilised the index provided by the Illumina MiSeq to demultiplex the OTUs. This was necessary because we only used one Illumina sequencing chip - it would have been impossible to keep track of different sample IDs and fragment information otherwise. 
 - pick_silva_otus: Takes the fully prepared sequences (seqs.fna) and picks OTUs at a 97% sequence identity threshold against the SILVA 16S rRNA referencing database.
-- core_diversity_analysis_18
+- summarise_silva_otu_table: Used more to check that pick_silva_otus had run correctly than anything else to be frank. Run after all tests which involved picking OTUs
+- core_diversity_analysis_18: Used to generate various alpha and beta diversity metrics on 2018 using biom table and mapping file. Only carried this out in 2018 as we decided there was not sufficient metadata to make this worth doing over all years. 
+-
+
+
 This represents the entirety of the core analysis pipeline as OTUs have now been produced and are ready for further analysis.
 
 You will note that merged_analysis (4X) refers to the merged total microbiomes in years 2016, 2017 and 2018. This was the first downstream analysis we attempted and it involved merging the OTUs we produced in the core analysis for each year (see core_analysis folder) and performing core diversity analysis.
@@ -27,7 +31,8 @@ You will note that merged_analysis (4X) refers to the merged total microbiomes i
 - We then carried out various statistical analyses.
 
 
-You will note that core_microbiome_analysis (2X) refers to the analysis carried out on the combined CORE microbiomes of 2017 and 2018. An identical analysis was also carried out between years 2016:2017, 2016:2018 and 2016:2017:2018. We have elected to not include the specific scripts for these analyses as they are redundant and only involve very minor changes in file path - this was part of the original design plan. 
+You will note that core_microbiome_analysis (2X) refers to the analysis carried out on the combined CORE microbiomes of 2017 and 2018. An identical analysis was also carried out between years 2016:2017, 2016:2018 and 2016:2017:2018. We have elected to not include the specific scripts for these analyses as they are redundant and only involve very minor changes in file path - this was part of the original design plan. It is important to note however that the sampling depth for CDA would have changed in each pairwise year's respective CDA script.
+
 - identify_core_microbiome_CDA_1718: This script incorporated a 1718 only .biom table which required the use of remove_16_otus (editing_scripts) on the combined 16/17/18 .biom OTU table. It produced various .biom tables based on various core microbiome definitions (% presence in all samples). We elected to choose 50%. 
 - core_microbiome_CDA_1718: This script carried out core diversity analysis on the above defined core microbiome table (50% definition) using the merged mapping file (there was no need to update the latter). 
 
@@ -41,5 +46,4 @@ You will note that statistical_scripts (4X)refers to the ANOSIM and KW tests we 
 - create_upgma_for_tree: This script was used to create a upgma plot that could be inputted into a web browser program (Interactive Tree of Life) that represents beta diversity well visually. 
 - kw_test_L2L3_1718: Used this script to compare phyla and class abundance temporally.
 - make_2D_plot_1718: Used this script to generate 2D PCoA plots that are used in the report.
-
 
